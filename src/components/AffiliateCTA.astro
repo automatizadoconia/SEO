@@ -1,0 +1,49 @@
+---
+interface Props {
+  tool: string;
+  href?: string;
+  description: string;
+}
+
+const { tool, href = "/recomendaciones", description } = Astro.props;
+---
+
+<div class="my-12 bg-gradient-to-r from-blue-50 to-violet-50 border border-blue-200 rounded-3xl p-8 sm:p-10 relative overflow-hidden group">
+  <!-- Decorative background elements -->
+  <div class="absolute -top-12 -right-12 w-32 h-32 bg-blue-100/40 rounded-full blur-3xl group-hover:bg-blue-200/50 transition-colors"></div>
+  
+  <div class="relative flex flex-col md:flex-row items-center gap-8">
+    <!-- Icon -->
+    <div class="w-16 h-16 rounded-2xl bg-white shadow-sm border border-blue-100 flex items-center justify-center flex-shrink-0">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.5" aria-hidden="true">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 text-center md:text-left">
+      <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mb-3">
+        ¿Quieres dominar <span class="text-blue-600">{tool}</span> desde cero?
+      </h3>
+      <p class="text-slate-600 mb-6 leading-relaxed">
+        {description}
+      </p>
+      
+      <div class="flex flex-col items-center md:items-start gap-4">
+        <a
+          href={href}
+          class="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-bold rounded-2xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-100 hover:scale-[1.02] active:scale-95"
+        >
+          Ver el curso recomendado
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <p class="text-[11px] font-medium text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          Enlace de afiliado · Sin coste extra para ti
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

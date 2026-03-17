@@ -1,0 +1,133 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/recursos', label: 'Recursos' },
+  { href: '/recomendaciones', label: 'Recomendaciones' },
+  { href: '/sobre-mi', label: 'Sobre mí' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 shadow-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+
+    <!-- Logo: compact, no-wrap -->
+    <a href="/" class="flex items-center gap-2 shrink-0 whitespace-nowrap" aria-label="AutomatizadoConIA – Inicio">
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#3B82F6"/>
+        <circle cx="16" cy="16" r="5" fill="white"/>
+        <circle cx="7" cy="10" r="2.5" fill="white" opacity="0.7"/>
+        <circle cx="25" cy="10" r="2.5" fill="white" opacity="0.7"/>
+        <circle cx="7" cy="22" r="2.5" fill="white" opacity="0.7"/>
+        <circle cx="25" cy="22" r="2.5" fill="white" opacity="0.7"/>
+        <line x1="11" y1="16" x2="9.5" y2="10" stroke="white" stroke-width="1.5" opacity="0.6"/>
+        <line x1="21" y1="16" x2="22.5" y2="10" stroke="white" stroke-width="1.5" opacity="0.6"/>
+        <line x1="11" y1="16" x2="9.5" y2="22" stroke="white" stroke-width="1.5" opacity="0.6"/>
+        <line x1="21" y1="16" x2="22.5" y2="22" stroke="white" stroke-width="1.5" opacity="0.6"/>
+      </svg>
+      <span class="text-sm font-bold text-slate-900 leading-none whitespace-nowrap">
+        Automatizado<span class="font-thin text-blue-500">ConIA</span>
+      </span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-5" aria-label="Navegación principal">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class={`text-sm font-medium transition-colors hover:text-blue-500 ${
+            currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
+              ? 'text-blue-500'
+              : 'text-slate-600'
+          }`}
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="/recursos"
+        id="header-cta"
+        aria-label="Descarga el pack gratuito de automatizaciones"
+        class="ml-1 flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors shadow-sm"
+      >
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+        Pack Gratis
+      </a>
+    </nav>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="mobile-menu-btn"
+      class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+      aria-label="Abrir menú de navegación"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg id="icon-open" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+      <svg id="icon-close" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="hidden" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden border-t border-slate-100 bg-white/95 backdrop-blur-md"
+    role="navigation"
+    aria-label="Menú de navegación móvil"
+  >
+    <nav class="flex flex-col px-4 py-3 gap-1">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-slate-50 hover:text-blue-500 ${
+            currentPath === link.href ? 'text-blue-500 bg-blue-50' : 'text-slate-700'
+          }`}
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="/recursos"
+        class="mt-2 flex items-center justify-center gap-1.5 px-4 py-2.5 text-sm font-semibold bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+      >
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+        Descargar Pack Gratis
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  btn?.addEventListener('click', () => {
+    const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!isExpanded));
+    menu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+  });
+
+  // Close menu when a link is clicked
+  menu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+      btn?.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>

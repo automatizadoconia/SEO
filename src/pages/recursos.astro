@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const packIncludes = [
+  'Flujo n8n: Formulario → Google Sheets + email automático',
+  'Workflow Make: Recordatorio de seguimiento a clientes sin respuesta',
+  'Script Python + OpenAI: Generador automático de propuestas comerciales',
+  'PDF guía paso a paso con capturas',
+  'Repositorio GitHub con todo el código',
+];
+
+const repos = [
+  {
+    name: 'automatizadoconia-examples',
+    desc: 'Flujos n8n y Make exportados, scripts Python comentados listos para usar.',
+    url: 'https://github.com/automatizadoconia',
+  },
+  {
+    name: 'prompt-library-ia',
+    desc: 'Librería de prompts útiles para negocios y freelancers. Copy-paste directo.',
+    url: 'https://github.com/automatizadoconia',
+  },
+  {
+    name: 'automatizadoconia-tools',
+    desc: 'Mini-herramientas web gratuitas alojadas en GitHub Pages.',
+    url: 'https://github.com/automatizadoconia',
+  },
+];
+---
+
+<Layout
+  title="Recursos gratuitos de automatización con IA - Flujos n8n, Make y Python | AutomatizadoConIA"
+  description="Stack completo de herramientas de automatización con IA que uso en mis proyectos: n8n, Make, Brevo, OpenAI y más. Con planes gratuitos destacados."
+>
+  <Header />
+
+  <main class="flex-1">
+    <!-- Page header -->
+    <section class="bg-gradient-to-br from-slate-50 to-blue-50 border-b border-slate-100 py-20">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <span class="inline-block text-xs font-bold text-white bg-blue-500 px-3 py-1 rounded-full mb-4 shadow-sm shadow-blue-200">Recursos</span>
+        <h1 class="text-3xl sm:text-5xl font-bold text-slate-900 mb-4">Herramientas y Recursos</h1>
+        <p class="text-slate-500 text-lg max-w-2xl leading-relaxed">Todo el arsenal que utilizo para automatizar negocios y que tú también puedes implementar.</p>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 py-16">
+      <!-- Lead magnet section (existing) -->
+      <div class="rounded-3xl bg-gradient-to-br from-blue-600 to-violet-700 shadow-2xl shadow-blue-200 overflow-hidden mb-24">
+        <div class="flex flex-col lg:flex-row items-stretch">
+          <div class="flex-1 p-8 sm:p-12 text-white">
+            <h2 class="text-2xl sm:text-4xl font-bold mb-4 leading-tight">Pack: 3 Automatizaciones con IA para Freelancers</h2>
+            <p class="text-blue-100 mb-8 leading-relaxed text-lg">Un flujo n8n para leads, un workflow Make para seguimientos y un script Python para propuestas. Documentado e importable.</p>
+            <ul class="flex flex-col gap-4">
+              {packIncludes.map((item) => (
+                <li class="flex items-start gap-3">
+                  <span class="mt-0.5 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="3"><path d="M2 6l3 3 5-5"/></svg>
+                  </span>
+                  <span class="text-white text-sm font-medium">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="w-full lg:w-[400px] bg-white p-8 sm:p-12 flex flex-col justify-center">
+            <h3 class="font-bold text-slate-900 text-xl mb-6">Recíbelo gratis</h3>
+            <form class="flex flex-col gap-4" onsubmit="event.preventDefault()">
+              <input type="email" placeholder="tu@email.com" required class="w-full px-4 py-4 rounded-xl border-2 border-slate-100 bg-slate-50 text-sm focus:border-blue-500 outline-none transition-all" />
+              <button class="w-full py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-100 transition-all">Quiero el pack gratis</button>
+            </form>
+            <p class="mt-5 text-[11px] text-slate-400 text-center font-medium">✨ Más de 200 freelancers ya lo están usando.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEW: Tools Stack Section -->
+      <div class="mb-24">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Mi stack completo de herramientas</h2>
+          <p class="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed">Las herramientas que uso en mis proyectos reales. Algunas tienen planes gratuitos, otras son de pago. Todas las he probado.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            { name: 'n8n', desc: 'Automatización open source. La uso para flujos complejos con IA.', plan: 'Gratis / Cloud', url: 'https://n8n.io', color: 'bg-blue-100 text-blue-700' },
+            { name: 'Make', desc: 'Visual y potente para no-code. Ideal para empezar sin programar.', plan: 'Gratis / Pago', url: 'https://make.com', color: 'bg-indigo-100 text-indigo-700' },
+            { name: 'Brevo', desc: 'Email marketing y automatización. Muy potente y fácil de integrar.', plan: 'Gratis 300/día', url: 'https://brevo.com', color: 'bg-green-100 text-green-700', affiliate: true },
+            { name: 'OpenAI API', desc: 'La IA que uso en mis scripts Python y flujos n8n.', plan: 'Pay-per-use', url: 'https://platform.openai.com', color: 'bg-emerald-100 text-emerald-800' },
+            { name: 'GitHub Pages', desc: 'Hosting gratuito para webs estáticas. Esta web corre aquí.', plan: '100% Gratis', url: 'https://pages.github.com', color: 'bg-slate-100 text-slate-700' },
+            { name: 'Astro', desc: 'Framework para webs estáticas ultrarrápidas. Perfecto para SEO.', plan: 'Open Source', url: 'https://astro.build', color: 'bg-orange-100 text-orange-800' }
+          ].map(tool => (
+            <div class="bg-white border border-slate-100 rounded-3xl p-8 hover:shadow-xl transition-all duration-300 flex flex-col group">
+              <div class="flex items-center justify-between mb-6">
+                <div class={`w-14 h-14 rounded-2xl ${tool.color} flex items-center justify-center text-xl font-black group-hover:scale-110 transition-transform`}>
+                  {tool.name.charAt(0)}
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-slate-50 text-slate-500 rounded-lg border border-slate-100">
+                  {tool.plan}
+                </span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-3">{tool.name}</h3>
+              <p class="text-slate-500 text-sm leading-relaxed mb-8 flex-1">{tool.desc}</p>
+              <div class="space-y-4">
+                <a href={tool.url} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full py-3 border-2 border-slate-100 rounded-xl font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-200 transition-all text-sm">
+                  Ver herramienta
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                {tool.affiliate && (
+                  <p class="text-[10px] text-slate-400 text-center font-medium italic">* Enlace de afiliado</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- GitHub repos (existing) -->
+      <div id="github-section">
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-10">Repositorios útiles en GitHub</h2>
+        <div class="grid sm:grid-cols-3 gap-6">
+          {repos.map((repo) => (
+            <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8 hover:shadow-lg transition-all flex flex-col">
+              <h3 class="font-bold text-slate-900 mb-3">{repo.name}</h3>
+              <p class="text-slate-500 text-sm mb-6 flex-1">{repo.desc}</p>
+              <a href={repo.url} target="_blank" class="text-blue-600 text-xs font-bold hover:underline">Ver en GitHub →</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

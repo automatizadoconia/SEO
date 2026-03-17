@@ -1,0 +1,340 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const latestPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = latestPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "AutomatizadoConIA",
+  "url": "https://automatizadoconia.github.io",
+  "description": "Automatizaciones reales con IA para freelancers y pequeños negocios.",
+  "author": {
+    "@type": "Person",
+    "name": "AutomatizadoConIA"
+  }
+};
+---
+
+<Layout
+  title="AutomatizadoConIA – Automatización e IA para freelancers y negocios"
+  description="Aprende a automatizar tu trabajo con Inteligencia Artificial. Flujos reales de n8n, Make y Python para ahorrar horas cada semana."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+  
+  <Header />
+
+  <main class="flex-1">
+
+    <!-- ========== HERO ========== -->
+    <section class="relative overflow-hidden bg-white pt-20 pb-16 md:pt-28 md:pb-20">
+      <!-- Background gradient blob -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div class="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-blue-50 opacity-60 blur-3xl"></div>
+        <div class="absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full bg-violet-50 opacity-50 blur-3xl"></div>
+      </div>
+
+      <div class="relative max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-12 items-center">
+        <!-- Text -->
+        <div class="flex flex-col gap-6">
+          <div class="inline-flex items-center gap-2 bg-blue-500 text-white text-xs font-bold px-3 py-1.5 rounded-full w-fit shadow-sm shadow-blue-200">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+            Para freelancers y pequeños negocios
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl md:text-[3.25rem] font-bold text-slate-900 leading-tight text-balance">
+            Automatiza tu trabajo con IA.<br/>
+            <span class="text-primary">Sin ser programador.</span>
+          </h1>
+
+          <p class="text-lg text-slate-600 max-w-lg leading-relaxed">
+            Flujos reales, herramientas gratuitas y tutoriales paso a paso para freelancers y pequeños negocios que quieren trabajar menos y ganar más.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <a
+              href="/recursos"
+              id="hero-cta-primary"
+              class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary text-white font-semibold rounded-xl hover:bg-blue-600 transition-all shadow-lg shadow-blue-200 hover:shadow-blue-300 hover:-translate-y-0.5"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v12m0 0l-4-4m4 4l4-4M3 18h18"/>
+              </svg>
+              Descarga el Pack Gratis de 3 Automatizaciones
+            </a>
+            <a
+              href="https://youtube.com/@automatizadoconia"
+              id="hero-cta-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-slate-700 font-semibold rounded-xl border-2 border-slate-200 hover:border-blue-500 hover:bg-slate-50 transition-all duration-300"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#EF4444" aria-hidden="true">
+                <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.5v-7l6.3 3.5-6.3 3.5z"/>
+              </svg>
+              Ver los tutoriales en YouTube
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero image -->
+        <div class="flex justify-center">
+          <div class="relative w-full max-w-md rounded-2xl overflow-hidden shadow-2xl shadow-blue-100 border border-slate-100">
+            <img
+              src="/images/hero.png"
+              alt="Diagrama de flujo automatizado con IA resaltando nodos de conexión y procesos"
+              width="520"
+              height="420"
+              class="w-full h-auto object-cover"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ¿QUÉ TE OFREZCO? ========== -->
+    <section class="bg-slate-50 py-20" id="que-ofrezco">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">¿Qué te ofrezco?</h2>
+          <p class="mt-3 text-slate-500 max-w-xl mx-auto">Todo lo que necesitas para automatizar tu trabajo, sin rodeos.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-6">
+          <!-- Card 1 -->
+          <a href="/recursos" class="group bg-white rounded-2xl p-7 shadow-sm border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+            <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-5 group-hover:bg-blue-200 transition-colors">
+              <!-- Gear + lightning -->
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </div>
+            <h3 class="font-bold text-slate-900 text-lg mb-2">Automatizaciones reales</h3>
+            <p class="text-slate-500 text-sm leading-relaxed mb-4">
+              Scripts, flujos en n8n y Make que puedes importar y usar hoy mismo en tu negocio.
+            </p>
+            <span class="text-xs font-bold text-primary flex items-center gap-1">
+              Ver recursos <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <!-- Card 2 -->
+          <a href="/blog" class="group bg-white rounded-2xl p-7 shadow-sm border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+            <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-5 group-hover:bg-blue-200 transition-colors">
+              <!-- Play circle -->
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <polygon points="10 8 16 12 10 16 10 8"/>
+              </svg>
+            </div>
+            <h3 class="font-bold text-slate-900 text-lg mb-2">Tutoriales en vídeo</h3>
+            <p class="text-slate-500 text-sm leading-relaxed mb-4">
+              Demos técnicas paso a paso. Sin teoría vacía, solo casos de uso reales con IA.
+            </p>
+            <span class="text-xs font-bold text-primary flex items-center gap-1">
+              Ir al blog <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <!-- Card 3 -->
+          <a href="/recursos" class="group bg-white rounded-2xl p-7 shadow-sm border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+            <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-5 group-hover:bg-blue-200 transition-colors">
+              <!-- Mail -->
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="M22 7l-10 7L2 7"/>
+              </svg>
+            </div>
+            <h3 class="font-bold text-slate-900 text-lg mb-2">Recursos gratuitos</h3>
+            <p class="text-slate-500 text-sm leading-relaxed mb-4">
+              Pack de automatizaciones, plantillas y guías enviadas directamente a tu email.
+            </p>
+            <span class="text-xs font-bold text-primary flex items-center gap-1">
+              Descargar pack <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ÚLTIMOS ARTÍCULOS ========== -->
+    <section class="bg-white py-20" id="articulos">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Últimos artículos</h2>
+            <p class="mt-2 text-slate-500">Tutoriales prácticos para aplicar IA en tu negocio ahora.</p>
+          </div>
+          <a href="/blog" class="text-sm font-semibold text-primary hover:text-blue-700 transition-colors whitespace-nowrap flex items-center gap-1">
+            Ver todos los artículos
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-6">
+          {[
+            {
+              slug: 'que-es-n8n',
+              category: 'n8n',
+              categoryColor: 'bg-blue-100 text-blue-700',
+              title: 'Qué es n8n y cómo puede ahorrarte horas cada semana',
+              excerpt: 'Descubre el potencial de n8n para conectar tus herramientas sin programar una sola línea de código.',
+              date: '10 Mar 2026',
+              time: '7 min',
+              gradient: 'from-blue-500 to-blue-700'
+            },
+            {
+              slug: 'make-vs-zapier-vs-n8n',
+              category: 'Make',
+              categoryColor: 'bg-indigo-100 text-indigo-700',
+              title: 'Make vs Zapier vs n8n: cuál elegir si eres freelance',
+              excerpt: 'Tres filosofías distintas para un mismo objetivo. Analizamos cuál se adapta mejor a tu flujo de trabajo.',
+              date: '5 Mar 2026',
+              time: '9 min',
+              gradient: 'from-blue-600 to-indigo-700'
+            },
+            {
+              slug: '3-automatizaciones-con-ia',
+              category: 'Casos de uso',
+              categoryColor: 'bg-violet-100 text-violet-700',
+              title: '3 automatizaciones con IA que puedes montar hoy mismo',
+              excerpt: 'Casos prácticos de generación de contenido, clasificación de leads y atención al cliente automática.',
+              date: '28 Feb 2026',
+              time: '8 min',
+              gradient: 'from-indigo-600 to-violet-700'
+            },
+          ].map((post) => (
+            <article class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden hover:shadow-lg hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 flex flex-col group">
+              <!-- Header gradient card -->
+              <div class={`h-40 bg-gradient-to-br ${post.gradient} p-6 flex flex-col justify-end relative overflow-hidden`}>
+                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
+                   <svg width="100" height="100" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <h3 class="font-bold text-white text-base leading-tight relative z-10">{post.title}</h3>
+              </div>
+              <div class="p-6 flex flex-col flex-1">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class={`text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded ${post.categoryColor}`}>
+                    {post.category}
+                  </span>
+                  <span class="text-[11px] text-slate-400">{post.time} lectura</span>
+                </div>
+                <p class="text-slate-500 text-sm leading-relaxed flex-1 mb-4">{post.excerpt}</p>
+                <div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-50">
+                  <span class="text-xs text-slate-400">{post.date}</span>
+                  <a href={`/blog/${post.id}`} class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold hover:bg-blue-600 hover:text-white transition-colors">
+                    Leer más
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PARA QUIÉN ========== -->
+    <section class="bg-slate-50 py-20 relative overflow-hidden" id="para-quien">
+      <div class="absolute top-0 left-0 w-64 h-64 bg-blue-100/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center relative z-10">
+        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">Esto es para ti si…</h2>
+        <p class="text-slate-500 mb-12">No necesitas saber programar. Solo necesitas querer mejorar.</p>
+        <ul class="text-left flex flex-col gap-4 mb-12">
+          {[
+            'Eres freelancer, autónomo o tienes un pequeño negocio',
+            'Pierdes horas en tareas repetitivas (emails, seguimientos, informes)',
+            'Quieres usar IA pero no sabes por dónde empezar',
+            'No tienes presupuesto para contratar un técnico caro',
+            'Quieres automatizar sin depender de nadie',
+          ].map((item) => (
+            <li class="flex items-start gap-3 bg-white rounded-xl px-5 py-4 shadow-sm border border-slate-100 hover:border-blue-200 transition-colors">
+              <span class="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center">
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2 6l3 3 5-5"/>
+                </svg>
+              </span>
+              <span class="text-slate-700 font-medium">{item}</span>
+            </li>
+          ))}
+        </ul>
+        <a href="/recursos" class="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-blue-600 transition-all shadow-lg hover:-translate-y-1">
+          Empieza con el pack gratuito
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ========== EMAIL CAPTURE ========== -->
+    <section class="py-24 px-4 sm:px-6 relative overflow-hidden" id="pack-gratis" style="background-color: #0F172A;">
+      <div class="absolute inset-0 bg-blue-900/10 pointer-events-none"></div>
+      <div class="max-w-2xl mx-auto text-center relative z-10">
+        <div class="inline-flex items-center gap-2 bg-blue-500/20 text-blue-300 text-xs font-bold px-3 py-1.5 rounded-full mb-6 border border-blue-500/30">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          Pack 100% gratuito
+        </div>
+
+        <h2 class="text-3xl sm:text-4xl font-bold text-white text-balance mb-6">
+          Recibe el Pack Gratis: 3 Automatizaciones con IA para tu negocio
+        </h2>
+        <p class="text-slate-400 mb-10 leading-relaxed text-lg">
+          Un flujo n8n, un workflow Make y un script Python. Listos para importar. Te los mando ahora.
+        </p>
+
+        <!-- Form container with extra spacing -->
+        <div class="mt-10 max-w-md mx-auto">
+          <form
+            id="home-email-form"
+            class="flex flex-col sm:flex-row gap-3"
+            onsubmit="event.preventDefault()"
+            aria-label="Formulario para recibir el pack gratuito"
+          >
+            <label for="home-email-input" class="sr-only">Tu email</label>
+            <input
+              id="home-email-input"
+              type="email"
+              name="email"
+              placeholder="tunegocio@email.com"
+              required
+              class="flex-1 px-5 py-4 rounded-xl text-slate-900 border-2 border-transparent focus:border-blue-500 focus:outline-none bg-white font-medium shadow-inner"
+            />
+            <button
+              type="submit"
+              class="px-8 py-4 bg-white text-dark font-bold rounded-xl hover:bg-slate-100 transition-all hover:scale-[1.02] shadow-xl whitespace-nowrap"
+            >
+              Quiero el pack
+            </button>
+          </form>
+          <p class="mt-4 text-xs text-slate-500">Sin spam. Solo automatizaciones útiles.</p>
+        </div>
+
+        <!-- Tool logos integration info -->
+        <div class="mt-12 pt-10 border-t border-white/5">
+          <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-5 italic">Incluye flujos para:</p>
+          <div class="flex items-center justify-center gap-6 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+             <span class="text-white font-bold text-sm tracking-tighter">n8n</span>
+             <span class="text-white font-bold text-sm tracking-tighter">Make</span>
+             <span class="text-white font-bold text-sm tracking-tighter">Python</span>
+             <span class="text-white font-bold text-sm tracking-tighter">OpenAI</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</Layout>

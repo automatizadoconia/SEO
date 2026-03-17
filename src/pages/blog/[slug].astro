@@ -1,0 +1,143 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import AffiliateCTA from '../../components/AffiliateCTA.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.id }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Logic for related articles (3 random ones excl. current)
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const relatedPosts = allPosts
+  .filter(p => p.id !== entry.id)
+  .sort(() => Math.random() - 0.5)
+  .slice(0, 3);
+
+// Content for AffiliateCTA based on category
+const affiliateData = {
+  'n8n': {
+    tool: 'n8n',
+    description: 'El curso más completo para montar flujos automáticos con n8n y OpenAI, con demos reales y plantillas incluidas.'
+  },
+  'Make': {
+    tool: 'Make',
+    description: 'Aprende a automatizar con Make de forma visual, sin código, con plantillas listas para importar en tu negocio.'
+  },
+  'Python': {
+    tool: 'Python',
+    description: 'Da el salto a automatizaciones avanzadas con Python. Scripts reutilizables y mentoría incluida.'
+  },
+  'Casos de uso': {
+    tool: 'IA Generativa',
+    description: 'Aprende a integrar OpenAI y Claude en flujos de trabajo reales. Enfoque 100% práctico para negocios.'
+  },
+  'IA para negocios': {
+    tool: 'IA Generativa',
+    description: 'Aprende a integrar OpenAI y Claude en flujos de trabajo reales. Enfoque 100% práctico para negocios.'
+  }
+};
+
+const currentAffiliate = affiliateData[entry.data.category] || affiliateData['Casos de uso'];
+
+// ISO date for Schema
+const isoDate = entry.data.pubDate.toISOString();
+
+// Schema.org Article
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": entry.data.title,
+  "description": entry.data.description,
+  "datePublished": isoDate,
+  "author": {
+    "@type": "Person",
+    "name": "AutomatizadoConIA",
+    "url": "https://automatizadoconia.github.io/sobre-mi"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AutomatizadoConIA",
+    "url": "https://automatizadoconia.github.io"
+  }
+};
+---
+
+<Layout 
+  title={`${entry.data.title} | AutomatizadoConIA`}
+  description={entry.data.description}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  
+  <Header />
+
+  <main class="flex-1">
+    <article class="max-w-4xl mx-auto px-4 sm:px-6 py-16">
+      <!-- Article Header -->
+      <header class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="inline-block text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100 uppercase tracking-widest">
+            {entry.data.category}
+          </span>
+          <span class="text-slate-400 text-sm">•</span>
+          <time datetime={isoDate} class="text-slate-500 text-sm font-medium">
+            {entry.data.pubDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </time>
+          <span class="text-slate-400 text-sm">•</span>
+          <span class="text-slate-500 text-sm font-medium">{entry.data.readingTime}</span>
+        </div>
+        
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 mb-8 leading-tight">
+          {entry.data.title}
+        </h1>
+        
+        <p class="text-xl text-slate-500 leading-relaxed italic border-l-4 border-blue-500 pl-6">
+          {entry.data.description}
+        </p>
+      </header>
+
+      <!-- Main Content -->
+      <div class="prose prose-slate prose-lg max-w-none prose-headings:text-slate-900 prose-headings:font-bold prose-a:text-blue-600 prose-a:font-bold hover:prose-a:text-blue-700 prose-img:rounded-3xl prose-img:shadow-lg">
+        <Content />
+      </div>
+
+      <!-- Affiliate CTA -->
+      <section class="mt-20">
+        <h2 class="text-2xl font-bold text-slate-900 mb-8">Herramienta recomendada para esto</h2>
+        <AffiliateCTA 
+          tool={currentAffiliate.tool} 
+          description={currentAffiliate.description} 
+        />
+      </section>
+
+      <!-- Related Articles -->
+      {relatedPosts.length > 0 && (
+        <section class="mt-24 pt-16 border-t border-slate-100">
+          <h2 class="text-2xl font-bold text-slate-900 mb-10">Artículos relacionados</h2>
+          <div class="grid sm:grid-cols-3 gap-8">
+            {relatedPosts.map(post => (
+              <a href={`/blog/${post.id}`} class="group">
+                <div class="bg-gray-100 aspect-video rounded-2xl mb-4 overflow-hidden relative">
+                   <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-violet-600 opacity-20 group-hover:scale-110 transition-transform duration-500"></div>
+                </div>
+                <h3 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
+                  {post.data.title}
+                </h3>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

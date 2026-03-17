@@ -1,0 +1,40 @@
+<!-- Cookie banner – shown until user dismisses -->
+<div
+  id="cookie-banner"
+  role="region"
+  aria-label="Aviso de cookies"
+  class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 shadow-lg px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 transition-transform duration-300"
+>
+  <p class="text-sm text-slate-600 max-w-xl">
+    <span class="mr-1">🍪</span>
+    Usamos cookies técnicas para mejorar tu experiencia. Sin rastreo publicitario.
+    <a href="#" class="text-blue-500 hover:underline ml-1">Más info</a>
+  </p>
+  <button
+    id="cookie-accept-btn"
+    class="shrink-0 px-5 py-2 text-sm font-semibold bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+    aria-label="Aceptar cookies y cerrar aviso"
+  >
+    Entendido
+  </button>
+</div>
+
+<script>
+  (function () {
+    const banner = document.getElementById('cookie-banner');
+    const btn = document.getElementById('cookie-accept-btn');
+
+    // Hide immediately if already accepted
+    if (localStorage.getItem('cookies-accepted') === '1') {
+      banner?.classList.add('hidden');
+    }
+
+    btn?.addEventListener('click', () => {
+      localStorage.setItem('cookies-accepted', '1');
+      if (banner) {
+        banner.style.transform = 'translateY(100%)';
+        setTimeout(() => banner.classList.add('hidden'), 310);
+      }
+    });
+  })();
+</script>
